@@ -1,0 +1,136 @@
+[
+  {
+    "selected" : false,
+    "frame" : "{{0, 0}, {306, 195}}",
+    "class" : "View",
+    "nodes" : [
+      {
+        "selected" : false,
+        "frame" : "{{43, 20}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "96FC6F20-CD2B-4AED-9965-C775C172F1BB",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Legenda PT",
+          "name" : "lblLegPt",
+          "font_size" : 20
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{43, 106}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Torrent",
+          "name" : "lblTor",
+          "font_size" : 20
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{201, 20}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : true,
+          "class" : "Switch",
+          "name" : "switchPt",
+          "action" : "leg_pt_action"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{201, 105}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchTor",
+          "action" : "tor_action"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{43, 66}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "96FC6F20-CD2B-4AED-9965-C775C172F1BB",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Legenda BR",
+          "font_size" : 20,
+          "name" : "lblLegBr"
+        }
+      },
+      {
+        "selected" : true,
+        "frame" : "{{201, 66}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchBr",
+          "action" : "leg_br_action"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{58, 144}, {156, 45}}",
+        "class" : "Button",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "action" : "search_action",
+          "frame" : "{{113, 82}, {80, 32}}",
+          "title" : "Search",
+          "uuid" : "F7F862C7-2B70-4D83-957E-F7FDC07F9C45",
+          "class" : "Button",
+          "name" : "btnSearch",
+          "font_size" : 26
+        }
+      }
+    ],
+    "attributes" : {
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "enabled" : true,
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "name" : "",
+      "flex" : ""
+    }
+  }
+]
