@@ -4,6 +4,7 @@ import ui
 import appex
 import urllib
 from imdb import imdb
+from imdb import SourceSite
 from objc_util import nsurl,UIApplication
 
 '''appex.get_text()
@@ -61,7 +62,7 @@ def geturl(title,lingua,site):
       url = legendasdivxUrl
       url = url.format(title_new)
     else:
-      url = legendasdivxUrl
+      url = legendasdivxUrlLang
       if lingua == Lingua.PT:
         url=url.format(title_new,'&form_cat=28')
       if lingua ==Lingua.BR:
@@ -111,14 +112,23 @@ def search_action(sender):
   
 def main():
   global title
-  
+  im = None
   url_imdb = u'http://www.imdb.com/title/tt3263904/'
+  
+  url_imdb = 'https://yts.ag/movie/the-boss-baby-2017'
   
   if appex.is_running_extension():
     url_imdb = appex.get_url()
     print('url:',url_imdb)
     #sheet_text = appex.get_text()
-  im = imdb(url_imdb)
+  if url_imdb.startswith('https://yts.ag/movie/') is True:
+    print('yts detected')
+    view['switchTor'].enabled = False
+    view['lblTor'].enabled = False
+    im = imdb(url_imdb,SourceSite.YTS)
+  else:
+    print('imdb detected')
+    im = imdb(url_imdb,SourceSite.IMDB)
   title = im.title
   print('tittle is:' + im.title)
   #print (sheet_text)
