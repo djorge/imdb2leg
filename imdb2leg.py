@@ -37,6 +37,7 @@ from enum import Enum
 class Site(Enum):
   Legendas = 1
   Torrent = 2
+  IShows = 3
 
 class Lingua(Enum):
   PT = 1
@@ -107,8 +108,10 @@ def search_action(sender):
   app = UIApplication.sharedApplication()
   app.openURL_(nsurl(url))
   view.close()
-  
-  
+
+def disableTorrent():
+  view['switchTor'].enabled = False
+  view['lblTor'].enabled = False
   
 def main():
   global title
@@ -117,20 +120,31 @@ def main():
   
   url_imdb = 'https://yts.ag/movie/the-boss-baby-2017'
   
+  url_imdb = u'http://ishowsapp.com/share/episode/5966172'
+  
   if appex.is_running_extension():
     url_imdb = appex.get_url()
     print('url:',url_imdb)
     #sheet_text = appex.get_text()
   if url_imdb.startswith('https://yts.ag/movie/') is True:
     print('yts detected')
-    view['switchTor'].enabled = False
-    view['lblTor'].enabled = False
+    disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
+  elif url_imdb.startswith('http://ishowsapp.com') is True:
+    input_text=''
+    if appex.is_running_extension():
+      input_text=appex.get_text()
+    else:
+      input_text = u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
+    title = input_text[:input_text.rfind(' - ')] 
+    disableTorrent()
   else:
     print('imdb detected')
     im = imdb(url_imdb,SourceSite.IMDB)
-  title = im.title
-  print('tittle is:' + im.title)
+  if len(title) ==0:
+    title = im.title
+  if im is not None:
+    print('tittle is:' + im.title)
   #print (sheet_text)
   
   view.present('sheet')
