@@ -6,6 +6,8 @@ import re
 class SourceSite(Enum):
   IMDB = 1
   YTS = 2
+  LEGENDAS_IMDBID =3
+  
   
 class imdb:
   def __init__(self, url, source):
@@ -34,6 +36,8 @@ class imdb:
       regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(\d\d\d\d\)"
     elif self.source == SourceSite.YTS:
       regexToGetTitle = "<h1>(.*?)</h1>"
+    elif self.source == SourceSite.LEGENDAS_IMDBID:
+      regexToGetTitle='(http://www.imdb.com/title/tt\d{7})'
 
     #extract with regex
     regexTitle = re.compile(regexToGetTitle)
@@ -48,5 +52,5 @@ def main():
   url_imdb = 'https://yts.ag/movie/ghost-in-the-shell-2017'
   
   im = imdb(url_imdb,SourceSite.YTS)
-  print('title extracted:',im.title)
+  #print('title extracted:',im.title)
 main()
