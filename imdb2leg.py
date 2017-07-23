@@ -113,6 +113,13 @@ def disableTorrent():
   view['switchTor'].enabled = False
   view['lblTor'].enabled = False
   
+def disableLegendas():
+  view['switchPt'].enabled = False
+  view['lblLegPt'].enabled = False
+  view['switchBr'].enabled = False
+  view['lblLegBr'].enabled = False
+  view['switchPt'].value = False
+  view['switchTor'].value = True
 def main():
   global title
   im = None
@@ -122,15 +129,19 @@ def main():
   
   url_imdb = u'http://ishowsapp.com/share/episode/5966172'
   
+  url_imdb = u'https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid=4481414&form_cat=28'
+  
+  url_imdb = 'https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=258522'
+  
   if appex.is_running_extension():
     url_imdb = appex.get_url()
     print('url:',url_imdb)
     #sheet_text = appex.get_text()
-  if url_imdb.startswith('https://yts.ag/movie/') is True:
+  if url_imdb.startswith('https://yts.ag/movie/'):
     print('yts detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
-  elif url_imdb.startswith('http://ishowsapp.com') is True:
+  elif url_imdb.startswith('http://ishowsapp.com'):
     input_text=''
     if appex.is_running_extension():
       input_text=appex.get_text()
@@ -138,13 +149,26 @@ def main():
       input_text = u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
     title = input_text[:input_text.rfind(' - ')] 
     disableTorrent()
-  else:
+  elif url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid='):
+    #get it indb id
+    imdburl=u'http://www.imdb.com/title/{0}/'
+    print('legendas divx detected with imdb in url - not supportee yet')
+    #ttid = url_imdb.rfind
+  elif url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid='):
+    im = imdb(url_imdb,SourceSite.LEGENDAS_IMDBID)
+    url_imdb = im.title
+    im = imdb(url_imdb,SourceSite.IMDB)
+    disableLegendas()
+    print('legendas divx detected')
+  elif url_imdb.startswith(u'http://www.imdb.com/title/tt'):
     print('imdb detected')
     im = imdb(url_imdb,SourceSite.IMDB)
-  if len(title) ==0:
-    title = im.title
+    
   if im is not None:
     print('tittle is:' + im.title)
+    if len(title) ==0:
+      title = im.title
+  
   #print (sheet_text)
   
   view.present('sheet')
