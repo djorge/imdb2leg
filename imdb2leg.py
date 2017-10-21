@@ -24,6 +24,8 @@ appex.get input devolve listq
 l[-1]['title']
 u'The Great Raid'
 
+https://zooqle.com/search?q=Orphan.s01e05
+
 
 '''
 
@@ -46,6 +48,7 @@ class Site(Enum):
   IShows = 3
   TorSearchZ2 = 4
   TorSearchPBay = 5
+  TorSearchZooqle = 6
 
 class Lingua(Enum):
   PT = 1
@@ -67,6 +70,7 @@ def geturl(title,lingua,site):
   
   torrSearchPBayUrl = 'https://pirateproxy.cam/mobileproxy/search/{}/0/0/0'
   
+  torrSearchZooqleUrl='https://zooqle.com/search?q={}'
   title_new = urllib.parse.quote_plus(title)
   
   url = ''
@@ -86,6 +90,8 @@ def geturl(title,lingua,site):
     url=torrSearchZ2Url.format(title_new)
   elif site ==Site.TorSearchPBay:
     url=torrSearchPBayUrl.format(title_new)
+  elif site ==Site.TorSearchZooqle:
+    url=torrSearchZooqleUrl.format(title_new)
     
   return url
 def viewEnabled(v):
@@ -111,7 +117,9 @@ def disableSwitch(sender):
   if sender.name != 'switchTorZ2':
     if viewEnabled('switchTorZ2'):
       view['switchTorZ2'].value=not sender.value
-  
+  if sender.name != 'switchTorZooqle':
+    if viewEnabled('switchTorZooqle'):
+      view['switchTorZooqle'].value=not sender.value
   #view['switchTor'].value=False
 
 def disableSearchTorrent():
@@ -119,6 +127,8 @@ def disableSearchTorrent():
   view['lblTorTz2'].enabled = False
   view['switchPBay'].enabled = False
   view['lblTorPBay'].enabled = False
+  view['lblTorZooqle'].enabled = False
+  view['switchZooqle'].enabled = False
   
   
 def disableTorrent():
@@ -159,6 +169,9 @@ def torzPBay_action(sender):
 
 def TorZ2_action(sender):
   disableSwitch(sender)
+  
+def torZooqle_action(sender):
+  disableSwitch(sender)
 
 def search_action(sender):
   #get swichs state
@@ -170,6 +183,7 @@ def search_action(sender):
   tor = view['switchTor'].value
   torSearchZ2 = view['switchTorZ2'].value
   torSearchPBay = view['switchTorzPBay'].value
+  torSearchZooqle = view['switchTorZooqle'].value
   if legbr and legpt:
     url = geturl(title,Lingua.ALL,Site.Legendas)
   elif legbr or legpt:
@@ -184,7 +198,8 @@ def search_action(sender):
     url = geturl(title,None,Site.TorSearchPBay)
   elif torSearchZ2:
     url = geturl(title,None,Site.TorSearchZ2)
-    
+  elif torSearchZooqle:
+    url = geturl(title,None,Site.TorSearchZooqle)
   
   print('url: ',url)
   app = UIApplication.sharedApplication()
