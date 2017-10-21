@@ -1,7 +1,7 @@
 [
   {
     "selected" : false,
-    "frame" : "{{0, 0}, {306, 195}}",
+    "frame" : "{{0, 0}, {313, 353}}",
     "class" : "View",
     "nodes" : [
       {
@@ -12,32 +12,32 @@
 
         ],
         "attributes" : {
-          "font_name" : "<System>",
+          "name" : "lblLegPt",
           "frame" : "{{78, 82}, {150, 32}}",
           "uuid" : "96FC6F20-CD2B-4AED-9965-C775C172F1BB",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Legenda PT",
-          "name" : "lblLegPt",
-          "font_size" : 20
+          "font_size" : 20,
+          "font_name" : "<System>"
         }
       },
       {
         "selected" : false,
-        "frame" : "{{43, 106}, {150, 30}}",
+        "frame" : "{{43, 99}, {150, 30}}",
         "class" : "Label",
         "nodes" : [
 
         ],
         "attributes" : {
-          "font_name" : "<System>",
+          "name" : "lblTor",
           "frame" : "{{78, 82}, {150, 32}}",
           "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
           "class" : "Label",
           "alignment" : "left",
-          "text" : "Torrent",
-          "name" : "lblTor",
-          "font_size" : 20
+          "text" : "Torrent YTS",
+          "font_size" : 20,
+          "font_name" : "<System>"
         }
       },
       {
@@ -48,67 +48,67 @@
 
         ],
         "attributes" : {
-          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
+          "action" : "leg_pt_action",
           "frame" : "{{128, 82}, {51, 31}}",
           "value" : true,
           "class" : "Switch",
           "name" : "switchPt",
-          "action" : "leg_pt_action"
+          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263"
         }
       },
       {
         "selected" : false,
-        "frame" : "{{201, 105}, {51, 31}}",
+        "frame" : "{{201, 98}, {51, 31}}",
         "class" : "Switch",
         "nodes" : [
 
         ],
         "attributes" : {
-          "uuid" : "564F4355-814C-44FB-8490-377671F87311",
+          "action" : "tor_action",
           "frame" : "{{128, 82}, {51, 31}}",
           "value" : false,
           "class" : "Switch",
           "name" : "switchTor",
-          "action" : "tor_action"
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
         }
       },
       {
         "selected" : false,
-        "frame" : "{{43, 66}, {150, 30}}",
+        "frame" : "{{43, 59}, {150, 30}}",
         "class" : "Label",
         "nodes" : [
 
         ],
         "attributes" : {
-          "font_name" : "<System>",
+          "font_size" : 20,
           "frame" : "{{78, 82}, {150, 32}}",
           "uuid" : "96FC6F20-CD2B-4AED-9965-C775C172F1BB",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Legenda BR",
-          "font_size" : 20,
-          "name" : "lblLegBr"
+          "name" : "lblLegBr",
+          "font_name" : "<System>"
         }
       },
       {
-        "selected" : true,
-        "frame" : "{{201, 66}, {51, 31}}",
+        "selected" : false,
+        "frame" : "{{201, 59}, {51, 31}}",
         "class" : "Switch",
         "nodes" : [
 
         ],
         "attributes" : {
-          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
+          "action" : "leg_br_action",
           "frame" : "{{128, 82}, {51, 31}}",
           "value" : false,
           "class" : "Switch",
           "name" : "switchBr",
-          "action" : "leg_br_action"
+          "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263"
         }
       },
       {
         "selected" : false,
-        "frame" : "{{58, 144}, {156, 45}}",
+        "frame" : "{{70, 253}, {156, 44}}",
         "class" : "Button",
         "nodes" : [
 
@@ -122,15 +122,117 @@
           "name" : "btnSearch",
           "font_size" : 26
         }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{43, 138}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "font_size" : 20,
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "TorrentZ2",
+          "name" : "lblTorTz2",
+          "font_name" : "<System>"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{201, 137}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "action" : "TorZ2_action",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchTorZ2",
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{43, 177}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "name" : "lblTorPBay",
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Torrent PBay",
+          "font_size" : 20,
+          "font_name" : "<System>"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{201, 176}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "action" : "torzPBay_action",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchTorzPBay",
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
+        }
+      },
+      {
+        "selected" : false,
+        "frame" : "{{43, 215}, {150, 30}}",
+        "class" : "Label",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "font_size" : 20,
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Torrent Zooqle",
+          "name" : "lblTorZooqle",
+          "font_name" : "<System>"
+        }
+      },
+      {
+        "selected" : true,
+        "frame" : "{{201, 215}, {51, 31}}",
+        "class" : "Switch",
+        "nodes" : [
+
+        ],
+        "attributes" : {
+          "action" : "torZooqle_action",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchTorZooqle",
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
+        }
       }
     ],
     "attributes" : {
-      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "flex" : "",
       "enabled" : true,
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "name" : "",
-      "flex" : ""
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)"
     }
   }
 ]
