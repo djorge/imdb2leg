@@ -41,6 +41,7 @@ legbr=''
 tor=''
 title =''
 
+
 from enum import Enum
 class Site(Enum):
   Legendas = 1
@@ -251,6 +252,7 @@ def main():
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
   elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
+    print('ishowsapp detected')
     title=''
     input_text=''
     if appex.is_running_extension():
@@ -266,11 +268,9 @@ def main():
       title = title + ' ' + ep 
     elif input_text.rfind(' - ') >0:
       title = input_text[:input_text.rfind(' - ')]  
-    else:
-      title = input_text 
+    #else:
+      #title = input_text 
     #
-  if title == '':
-    title = input_text
     print('title from {} is {}'.format(input_text,title))
     
     disableTorrent()
@@ -295,6 +295,8 @@ def main():
     if len(title) ==0:
       title = im.title
   
+  if title=='':
+    title = input_text
   #print (sheet_text)
   
   view.present('sheet')
