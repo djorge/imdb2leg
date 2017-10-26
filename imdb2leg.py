@@ -49,6 +49,7 @@ class Site(Enum):
   TorSearchZ2 = 4
   TorSearchPBay = 5
   TorSearchZooqle = 6
+  ImdbSearch = 7
 
 class Lingua(Enum):
   PT = 1
@@ -71,6 +72,8 @@ def geturl(title,lingua,site):
   torrSearchPBayUrl = 'https://pirateproxy.cam/mobileproxy/search/{}/0/0/0'
   
   torrSearchZooqleUrl='https://zooqle.com/search?q={}'
+  
+  imdb_search='imdb:///find?q={}'
   title_new = urllib.parse.quote_plus(title)
   
   url = ''
@@ -92,6 +95,8 @@ def geturl(title,lingua,site):
     url=torrSearchPBayUrl.format(title_new)
   elif site ==Site.TorSearchZooqle:
     url=torrSearchZooqleUrl.format(title_new)
+  elif site ==Site.ImdbSearch:
+    url=imdb_search.format(title_new)
     
   return url
 def viewEnabled(v):
@@ -120,6 +125,9 @@ def disableSwitch(sender):
   if sender.name != 'switchTorZooqle':
     if viewEnabled('switchTorZooqle'):
       view['switchTorZooqle'].value=not sender.value
+  if sender.name != 'switchImdb':
+    if viewEnabled('switchImdb'):
+      view['switchImdb'].value=not sender.value
   #view['switchTor'].value=False
 
 def disableSearchTorrent():
@@ -142,6 +150,9 @@ def disableLegendas():
   view['lblLegBr'].enabled = False
   view['switchPt'].value = False
   view['switchTor'].value = True
+  
+def disableSearchImdb():
+  view['switchImdb'].enabled = False
   
 def disableTorrentSearch(s):
   print(type(s.sender))
@@ -170,6 +181,9 @@ def torzPBay_action(sender):
 def TorZ2_action(sender):
   disableSwitch(sender)
   
+def imdb_action(sender):
+  disableSwitch(sender)
+
 def torZooqle_action(sender):
   disableSwitch(sender)
 
@@ -184,6 +198,7 @@ def search_action(sender):
   torSearchZ2 = view['switchTorZ2'].value
   torSearchPBay = view['switchTorzPBay'].value
   torSearchZooqle = view['switchTorZooqle'].value
+  imdbSearch=view['switchImdb'].value
   if legbr and legpt:
     url = geturl(title,Lingua.ALL,Site.Legendas)
   elif legbr or legpt:
@@ -200,11 +215,13 @@ def search_action(sender):
     url = geturl(title,None,Site.TorSearchZ2)
   elif torSearchZooqle:
     url = geturl(title,None,Site.TorSearchZooqle)
+  elif imdbSearch:
+    url = geturl(title,None,Site.ImdbSearch)
   
   print('url: ',url)
   app = UIApplication.sharedApplication()
   app.openURL_(nsurl(url))
-  view.close()
+  #view.close()
 
 
 def main():
@@ -223,15 +240,17 @@ def main():
   
   if appex.is_running_extension():
     url_imdb = appex.get_url()
+    input_text = appex.get_text()
     print('url:',url_imdb)
+    print('text:',appex.get_text())
   else:
-    url_imdb=' http://ishowsapp.com/share/episode/5665645'
-    #sheet_text = appex.get_text()
-  if url_imdb.startswith('https://yts.ag/movie/'):
+    #url_imdb=' http://ishowsapp.com/share/episode/5665645'
+    input_text = 'Jigsaw'
+  if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
     print('yts detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
-  elif url_imdb.startswith('http://ishowsapp.com'):
+  elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
     title=''
     input_text=''
     if appex.is_running_extension():
@@ -250,22 +269,24 @@ def main():
     else:
       title = input_text 
     #
+  if title == '':
+    title = input_text
     print('title from {} is {}'.format(input_text,title))
     
     disableTorrent()
     
-  elif url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid='):
+  elif url_imdb and url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid='):
     #get it indb id
     imdburl=u'http://www.imdb.com/title/{0}/'
     print('legendas divx detected with imdb in url - not supportee yet')
     #ttid = url_imdb.rfind
-  elif url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid='):
+  elif  url_imdb and url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid='):
     im = imdb(url_imdb,SourceSite.LEGENDAS_IMDBID)
     url_imdb = im.title
     im = imdb(url_imdb,SourceSite.IMDB)
     disableLegendas()
     print('legendas divx detected')
-  elif url_imdb.startswith(u'http://www.imdb.com/title/tt'):
+  elif url_imdb and  url_imdb.startswith(u'http://www.imdb.com/title/tt'):
     print('imdb detected')
     im = imdb(url_imdb,SourceSite.IMDB)
     
