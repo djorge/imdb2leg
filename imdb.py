@@ -9,6 +9,7 @@ class SourceSite(Enum):
   LEGENDAS_IMDBID =3
   
   
+  
 class imdb:
   def __init__(self, url, source):
     self.url = url
@@ -35,7 +36,7 @@ class imdb:
     if self.source == SourceSite.IMDB:
       regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(\d\d\d\d\)"
     elif self.source == SourceSite.YTS:
-      regexToGetTitle = "<h1>(.*?)</h1>"
+      regexToGetTitle = "<h1 itemprop=\"name\">(.*?)</h1>"
     elif self.source == SourceSite.LEGENDAS_IMDBID:
       regexToGetTitle='(http://www.imdb.com/title/tt\d{7})'
 

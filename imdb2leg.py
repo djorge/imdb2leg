@@ -58,7 +58,7 @@ class Lingua(Enum):
   ALL = 3
 
 def geturl(title,lingua,site):
-  print(title)
+  print('title',title)
   if lingua is not None:
     print(lingua.name)
   print(site.name)
@@ -190,7 +190,7 @@ def torZooqle_action(sender):
 
 def search_action(sender):
   #get swichs state
-  global legbr, legpt, tor
+  global legbr, legpt, tor, title
   #, legendasdivxUrl, legendasdivxUrlLang, title, torrentUrl
   
   legpt = view['switchPt'].value
@@ -228,10 +228,13 @@ def search_action(sender):
 def main():
   global title
   im = None
+  #para testes
+  '''
   url_imdb = u'http://www.imdb.com/title/tt3263904/'
   
   url_imdb = 'https://yts.ag/movie/the-boss-baby-2017'
   url_imdb = 'https://yts.ag/browse-movies/Enigma/all/all/0/latest'
+  '''
   
   #url_imdb = u'http://ishowsapp.com/share/episode/5966172'
   
@@ -246,11 +249,36 @@ def main():
     print('text:',appex.get_text())
   else:
     #url_imdb=' http://ishowsapp.com/share/episode/5665645'
-    input_text = 'Jigsaw'
+    input_text = 'I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
+    url_imdb= None
+    
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
-    print('yts detected')
+    print('yts ag detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
+  elif url_imdb and  url_imdb.startswith('https://yts.am/movie/'):
+    print('yts am detected')
+    disableTorrent()
+    im = imdb(url_imdb,SourceSite.YTS)
+  elif url_imdb is None and input_text is not None and input_text.find('via @TelevisionApp'):
+    print('tv time app detected')
+    if appex.is_running_extension():
+      input_text=appex.get_text()
+    else:
+      #input_text='I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
+      input_text='Check out The Long Road Home via @TelevisionApp https://trakt.tv/shows/the-long-road-home'
+    print('input_text:{}'.format(input_text))
+    if input_text.rfind('Check out ')>-1 and input_text.find(' via @TelevisionApp')>-1:
+      print('string pod',input_text.rfind('Check out ')+len(input_text))
+      title = input_text[input_text.rfind('Check out ')+len('Check out '):input_text.find(' via @TelevisionApp')]
+    if input_text.rfind('I liked ')>-1 and input_text.find(' #')>-1:
+      v=input_text.split('/')
+      title= v[4].replace('-',' ')
+      season=v[6]
+      numep=v[8]
+      ep=' S{:02d}e{:02d}'.format(int(season),int(numep))
+      title=title+ep
+    print('title from {} is {}'.format(input_text,title))
   elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
     print('ishowsapp detected')
     title=''
