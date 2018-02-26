@@ -54,4 +54,5 @@ def main():
   
   im = imdb(url_imdb,SourceSite.YTS)
   #print('title extracted:',im.title)
-main()
+if __name__ == '__main__':
+  main()
