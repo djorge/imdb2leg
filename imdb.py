@@ -16,6 +16,17 @@ class imdb:
     self.title = ''
     self.source = source
     self.fetch()
+  
+  def saveToFile(self):
+    print(f'saving content of url {self.url}')
+    #print(f'**saving url content** {self.res.text}')
+    with open('imdb-content.txt', 'wb') as out_file:
+      out_file.write(self.res.text.encode('utf-8'))
+      
+    #file = open('benfas_site_html.html', 'wb')
+    #file.write(req.text.encode('utf-8'))
+    #file.close()
+    return True
 
   def fetch(self):
     
@@ -24,6 +35,7 @@ class imdb:
                 #print self.res.text
                 #self.title = self.getTitle()
       #if self.source == SourceSite.IMDB
+      #self.saveToFile()
       self.getTitle()
                 #launch exception case error
   def parse(self):
@@ -50,9 +62,10 @@ class imdb:
 
 def main():
   
-  url_imdb = 'https://yts.ag/movie/ghost-in-the-shell-2017'
-  
-  im = imdb(url_imdb,SourceSite.YTS)
-  #print('title extracted:',im.title)
+  #url_imdb = 'https://www.imdb.com/title/tt2245988/'
+  #url_imdb='https://www.imdb.com/title/tt4912910/'
+  url_imdb='https://www.imdb.com/title/tt2798920/'
+  im = imdb(url_imdb,SourceSite.IMDB)
+  print('title extracted:',im.title)
 if __name__ == '__main__':
   main()
