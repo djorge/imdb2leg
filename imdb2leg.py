@@ -58,7 +58,7 @@ class Lingua(Enum):
   ALL = 3
 
 def geturl(title,lingua,site):
-  print('title',title)
+  print('title:',title)
   if lingua is not None:
     print(lingua.name)
   print(site.name)
@@ -314,7 +314,7 @@ def main():
     im = imdb(url_imdb,SourceSite.IMDB)
     disableLegendas()
     print('legendas divx detected')
-  elif url_imdb and  url_imdb.startswith(u'http://www.imdb.com/title/tt'):
+  elif url_imdb and url_imdb.startswith(u'https://www.imdb.com/title/tt'):
     print('imdb detected')
     im = imdb(url_imdb,SourceSite.IMDB)
     
@@ -324,6 +324,7 @@ def main():
       title = im.title
   
   if title=='':
+    print('warning. title empty and will become input_text')
     title = input_text
   #print (sheet_text)
   
