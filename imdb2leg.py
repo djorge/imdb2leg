@@ -338,7 +338,7 @@ def main():
     title = input_text
   #print (sheet_text)
   
-  #view.present('sheet')
+  view.present('sheet')
   
 #app = UIApplication.sharedApplication()
 #URL = 'https://www.google.co.uk/  searchbyimage?&image_url='
