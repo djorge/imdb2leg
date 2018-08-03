@@ -6,6 +6,7 @@ import urllib
 from imdb import imdb
 from imdb import SourceSite
 from objc_util import nsurl,UIApplication
+import re
 
 '''appex.get_text()
 u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
@@ -296,10 +297,19 @@ def main():
       title = title + ' ' + ep 
     elif input_text.rfind(' - ') >0:
       title = input_text[:input_text.rfind(' - ')]  
-    #else:
-      #title = input_text 
-    #
+      
     print('title from {} is {}'.format(input_text,title))
+    
+    # verifica se tem ano ie: (2018)
+    anore = re.compile(r'(\(\d\d\d\d\))')
+    ano = anore.search(input_text)
+    if ano is not None:
+      print (f'tem ano no nome: {ano.group(1)}')
+      title = re.sub(r'(\(\d\d\d\d\))','',title)
+      
+      print('title from {} is now {}'.format(input_text,title))
+    
+    
     
     disableTorrent()
     
@@ -328,7 +338,7 @@ def main():
     title = input_text
   #print (sheet_text)
   
-  view.present('sheet')
+  #view.present('sheet')
   
 #app = UIApplication.sharedApplication()
 #URL = 'https://www.google.co.uk/  searchbyimage?&image_url='
