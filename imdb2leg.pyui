@@ -1,16 +1,12 @@
 [
   {
-    "selected" : false,
-    "frame" : "{{0, 0}, {313, 353}}",
-    "class" : "View",
     "nodes" : [
       {
-        "selected" : false,
-        "frame" : "{{43, 20}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 20}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -20,15 +16,15 @@
           "text" : "Legenda PT",
           "font_size" : 20,
           "name" : "lblLegPt"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 99}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 99}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -38,15 +34,15 @@
           "text" : "Torrent YTS",
           "font_size" : 20,
           "name" : "lblTor"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 20}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 20}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -54,15 +50,15 @@
           "class" : "Switch",
           "name" : "switchPt",
           "action" : "leg_pt_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 98}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 98}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -70,15 +66,15 @@
           "class" : "Switch",
           "name" : "switchTor",
           "action" : "tor_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 59}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 59}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -88,15 +84,15 @@
           "text" : "Legenda BR",
           "name" : "lblLegBr",
           "font_size" : 20
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 59}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 59}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "D69178B9-902F-43BA-97DB-2B9F19EB4263",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -104,32 +100,35 @@
           "class" : "Switch",
           "name" : "switchBr",
           "action" : "leg_br_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{72, 303}, {156, 44}}",
-        "class" : "Button",
         "nodes" : [
 
         ],
+        "frame" : "{{75, 329}, {156, 44}}",
+        "class" : "Button",
         "attributes" : {
           "action" : "search_action",
+          "font_name" : "<System>",
           "frame" : "{{113, 82}, {80, 32}}",
           "title" : "Search",
           "uuid" : "F7F862C7-2B70-4D83-957E-F7FDC07F9C45",
           "class" : "Button",
-          "name" : "btnSearch",
-          "font_size" : 26
-        }
+          "alignment" : "left",
+          "text" : "IMDB",
+          "font_size" : 20,
+          "name" : "btnSearch"
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 138}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 138}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -139,15 +138,15 @@
           "text" : "TorrentZ2",
           "name" : "lblTorTz2",
           "font_size" : 20
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 137}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 137}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -155,15 +154,15 @@
           "class" : "Switch",
           "name" : "switchTorZ2",
           "action" : "TorZ2_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 177}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 177}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -173,15 +172,15 @@
           "text" : "Torrent PBay",
           "font_size" : 20,
           "name" : "lblTorPBay"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 176}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 176}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -189,15 +188,15 @@
           "class" : "Switch",
           "name" : "switchTorzPBay",
           "action" : "torzPBay_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 215}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 215}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -207,15 +206,15 @@
           "text" : "Torrent Zooqle",
           "name" : "lblTorZooqle",
           "font_size" : 20
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{201, 215}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 215}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -223,15 +222,15 @@
           "class" : "Switch",
           "name" : "switchTorZooqle",
           "action" : "torZooqle_action"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : false,
-        "frame" : "{{43, 254}, {150, 30}}",
-        "class" : "Label",
         "nodes" : [
 
         ],
+        "frame" : "{{43, 253}, {150, 30}}",
+        "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
           "frame" : "{{78, 82}, {150, 32}}",
@@ -241,15 +240,15 @@
           "text" : "IMDB",
           "font_size" : 20,
           "name" : "lbimdb"
-        }
+        },
+        "selected" : false
       },
       {
-        "selected" : true,
-        "frame" : "{{201, 254}, {51, 31}}",
-        "class" : "Switch",
         "nodes" : [
 
         ],
+        "frame" : "{{201, 254}, {51, 31}}",
+        "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
           "frame" : "{{128, 82}, {51, 31}}",
@@ -257,16 +256,54 @@
           "class" : "Switch",
           "name" : "switchImdb",
           "action" : "imdb_action"
-        }
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{43, 289}, {150, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 20,
+          "frame" : "{{83, 185}, {150, 32}}",
+          "uuid" : "5BD10AC2-C2BE-4BDE-8BC8-98B678DE0957",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Due",
+          "name" : "labelDue",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{201, 290}, {51, 31}}",
+        "class" : "Switch",
+        "attributes" : {
+          "action" : "due_action",
+          "frame" : "{{132, 185}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchDue",
+          "uuid" : "F47EFF19-887D-4E1D-8D66-CCC487F703AB"
+        },
+        "selected" : true
       }
     ],
+    "frame" : "{{0, 0}, {315, 401}}",
+    "class" : "View",
     "attributes" : {
-      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
-      "enabled" : true,
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "enabled" : true,
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
       "name" : "",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "flex" : ""
-    }
+    },
+    "selected" : false
   }
 ]
