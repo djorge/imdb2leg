@@ -28,6 +28,9 @@ u'The Great Raid'
 https://zooqle.com/search?q=Orphan.s01e05
 
 
+share do tvcine e series atraver do what's app 
+text:
+Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8282
 '''
 
 #https://torrentz2.eu/search?f=Ozark.s01
@@ -41,6 +44,7 @@ legpt=''
 legbr=''
 tor=''
 title =''
+im = None
 
 
 from enum import Enum
@@ -52,6 +56,7 @@ class Site(Enum):
   TorSearchPBay = 5
   TorSearchZooqle = 6
   ImdbSearch = 7
+  DueRemember = 8 #tvseries to due
 
 class Lingua(Enum):
   PT = 1
@@ -59,10 +64,12 @@ class Lingua(Enum):
   ALL = 3
 
 def geturl(title,lingua,site):
+  global im
   print('title:',title)
   if lingua is not None:
     print(lingua.name)
   print(site.name)
+  
   legendasdivxUrlLang ="http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search_next&order=&page=1&query={0}{1}"
 
   legendasdivxUrl ='http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search_next&order=&page=1&query={0}'
@@ -76,6 +83,12 @@ def geturl(title,lingua,site):
   torrSearchZooqleUrl='https://zooqle.com/search?q={}'
   
   imdb_search='imdb:///find?q={}'
+  
+  due_url = 'due://x-callback-url/add?title={}%20({}%20-%20{})%0A%0A{}%0A{}&secslater={}'
+  
+  #com x-callback-success mas nao faz sentido  porque chama o pythonista
+  #due_url = 'due://x-callback-url/add?title={}%20({}%20-%20{})%0A%0A{}%0A{}&secslater={}&x-success=pythonista://&x-source=pythonista&x-cancel=pythonista://'
+  
   title_new = urllib.parse.quote_plus(title)
   
   url = ''
@@ -99,6 +112,12 @@ def geturl(title,lingua,site):
     url=torrSearchZooqleUrl.format(title_new)
   elif site ==Site.ImdbSearch:
     url=imdb_search.format(title_new)
+  elif site == Site.DueRemember:
+    title_new = urllib.parse.quote(title)
+    sinopse = urllib.parse.quote(im.sinopse)
+    emissao = urllib.parse.quote(im.emissao)
+    url_imbd_search = imdb_search.format(urllib.parse.quote_plus(title))
+    url = due_url.format(title_new,im.canal, emissao,sinopse,url_imbd_search,im.duedate) 
     
   return url
 def viewEnabled(v):
@@ -130,6 +149,9 @@ def disableSwitch(sender):
   if sender.name != 'switchImdb':
     if viewEnabled('switchImdb'):
       view['switchImdb'].value=not sender.value
+  if sender.name != 'switchDue':
+    if viewEnabled('switchDue'):
+      view['switchDue'].value=not sender.value
   #view['switchTor'].value=False
 
 def disableSearchTorrent():
@@ -186,6 +208,9 @@ def TorZ2_action(sender):
 def imdb_action(sender):
   disableSwitch(sender)
 
+def due_action(sender):
+  disableSwitch(sender)
+
 def torZooqle_action(sender):
   disableSwitch(sender)
 
@@ -201,6 +226,7 @@ def search_action(sender):
   torSearchPBay = view['switchTorzPBay'].value
   torSearchZooqle = view['switchTorZooqle'].value
   imdbSearch=view['switchImdb'].value
+  dueSearch = view['switchDue'].value
   if legbr and legpt:
     url = geturl(title,Lingua.ALL,Site.Legendas)
   elif legbr or legpt:
@@ -219,6 +245,8 @@ def search_action(sender):
     url = geturl(title,None,Site.TorSearchZooqle)
   elif imdbSearch:
     url = geturl(title,None,Site.ImdbSearch)
+  elif dueSearch:
+    url = geturl(title,None,Site.DueRemember)
   
   print('url: ',url)
   app = UIApplication.sharedApplication()
@@ -228,7 +256,7 @@ def search_action(sender):
 
 def main():
   global title
-  im = None
+  global im
   #para testes
   '''
   url_imdb = u'http://www.imdb.com/title/tt3263904/'
@@ -250,8 +278,10 @@ def main():
     print('text:',appex.get_text())
   else:
     #url_imdb=' http://ishowsapp.com/share/episode/5665645'
-    input_text = 'I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
-    url_imdb= None
+    #input_text = 'I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
+    #input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8273'
+    #url_imdb= None
+    url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
     
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
     print('yts ag detected')
@@ -261,24 +291,26 @@ def main():
     print('yts am detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
-  elif url_imdb is None and input_text is not None and input_text.find('via @TelevisionApp'):
+  elif url_imdb is None and input_text is not None and input_text.find('via @TelevisionApp')>0:
     print('tv time app detected')
     if appex.is_running_extension():
       input_text=appex.get_text()
     else:
-      #input_text='I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
-      input_text='Check out The Long Road Home via @TelevisionApp https://trakt.tv/shows/the-long-road-home'
+      input_text='I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
+      #input_text='Check out The Long Road Home via @TelevisionApp https://trakt.tv/shows/the-long-road-home'
+      
+      #input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8282'
+  elif url_imdb is None and input_text is not None and input_text.find('nos canais TVCine')>0:
+    print('tv cine & series detected')
+    if appex.is_running_extension():
+      input_text=appex.get_text()
+    else:
+      input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8273'
     print('input_text:{}'.format(input_text))
-    if input_text.rfind('Check out ')>-1 and input_text.find(' via @TelevisionApp')>-1:
-      print('string pod',input_text.rfind('Check out ')+len(input_text))
-      title = input_text[input_text.rfind('Check out ')+len('Check out '):input_text.find(' via @TelevisionApp')]
-    if input_text.rfind('I liked ')>-1 and input_text.find(' #')>-1:
-      v=input_text.split('/')
-      title= v[4].replace('-',' ')
-      season=v[6]
-      numep=v[8]
-      ep=' S{:02d}e{:02d}'.format(int(season),int(numep))
-      title=title+ep
+    import re
+    url= re.search("(?P<url>https?://[^\s]+)", input_text).group("url")
+    print('url:',url)
+    im = imdb(url,SourceSite.TVSERIES)
     print('title from {} is {}'.format(input_text,title))
   elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
     print('ishowsapp detected')
@@ -314,8 +346,9 @@ def main():
     disableTorrent()
     
   elif url_imdb and url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid='):
+    
     #get it indb id
-    imdburl=u'http://www.imdb.com/title/{0}/'
+    imdburl=u'https://www.imdb.com/title/{0}/'
     print('legendas divx detected with imdb in url - not supportee yet')
     #ttid = url_imdb.rfind
   elif  url_imdb and url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid='):
