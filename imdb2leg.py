@@ -270,6 +270,7 @@ def main():
   #url_imdb = u'https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid=4481414&form_cat=28'
   
   #url_imdb = 'https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=258522'
+  url_imdb = 'http://www.tvcine.pt/filme/8274'
   
   if appex.is_running_extension():
     url_imdb = appex.get_url()
@@ -281,7 +282,8 @@ def main():
     #input_text = 'I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
     #input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8273'
     #url_imdb= None
-    url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
+    #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
+    input_text = None
     
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
     print('yts ag detected')
@@ -312,6 +314,12 @@ def main():
     print('url:',url)
     im = imdb(url,SourceSite.TVSERIES)
     print('title from {} is {}'.format(input_text,title))
+  elif input_text is None and url_imdb is not None and url_imdb.find('http://www.tvcine.pt')>=0:
+    print('url tv cine & series detected')
+    if not appex.is_running_extension():
+      url_imdb='http://tvcine.pt/filme/8273'
+    im = imdb(url_imdb,SourceSite.TVSERIES)
+    print('title from {} is {}'.format(url_imdb,im.title))
   elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
     print('ishowsapp detected')
     title=''
