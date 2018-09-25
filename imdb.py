@@ -98,7 +98,18 @@ class imdb:
         self.dianum = refound.group(1)
         print(refound.group(2))
         mes={}
+        mes['Jan']='01'
+        mes['Fev']='02'
+        mes['Mar']='03'
+        mes['Abr']='04'
+        mes['Mai']='05'
+        mes['Jun']='06'
+        mes['Jul']='07'
+        mes['Ago']='08'
         mes['Set']='09'
+        mes['Out']='10'
+        mes['Nov']='11'
+        mes['Dez']='12' 
         self.mesnum= mes[refound.group(2)]
         print(f'mesnum:{self.mesnum}')
         
