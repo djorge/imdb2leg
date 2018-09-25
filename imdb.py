@@ -116,7 +116,7 @@ class imdb:
         #calculate time from now till specidies date
         import datetime
         now = datetime.datetime.now()
-        show_year = now.year if int(self.mesnum)  <= now.month else now.year +1
+        show_year = now.year if int(self.mesnum)  >= now.month else now.year +1
         print(f'year calc:{show_year}')
         showtime = datetime.datetime(show_year,int(self.mesnum),int(self.dianum),23,00,00)
         self.duedate = (showtime - now).total_seconds()
