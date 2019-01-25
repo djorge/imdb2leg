@@ -57,6 +57,7 @@ class Site(Enum):
   TorSearchZooqle = 6
   ImdbSearch = 7
   DueRemember = 8 #tvseries to due
+  TorSearchRarBg = 9
 
 class Lingua(Enum):
   PT = 1
@@ -86,6 +87,8 @@ def geturl(title,lingua,site):
   
   due_url = 'due://x-callback-url/add?title={}%20({}%20-%20{})%0A%0A{}%0A{}&secslater={}'
   
+  torrSearchRarBgUrl = 'https://rarbgmirror.org/torrents.php?search={}'
+  
   #com x-callback-success mas nao faz sentido  porque chama o pythonista
   #due_url = 'due://x-callback-url/add?title={}%20({}%20-%20{})%0A%0A{}%0A{}&secslater={}&x-success=pythonista://&x-source=pythonista&x-cancel=pythonista://'
   
@@ -110,6 +113,8 @@ def geturl(title,lingua,site):
     url=torrSearchPBayUrl.format(title_new)
   elif site ==Site.TorSearchZooqle:
     url=torrSearchZooqleUrl.format(title_new)
+  elif site ==Site.TorSearchRarBg:
+    url=torrSearchRarBgUrl.format(title_new)
   elif site ==Site.ImdbSearch:
     url=imdb_search.format(title_new)
   elif site == Site.DueRemember:
@@ -146,6 +151,9 @@ def disableSwitch(sender):
   if sender.name != 'switchTorZooqle':
     if viewEnabled('switchTorZooqle'):
       view['switchTorZooqle'].value=not sender.value
+  if sender.name != 'switchTorRarBg':
+    if viewEnabled('switchTorRarBg'):
+      view['switchTorRarBg'].value=not sender.value
   if sender.name != 'switchImdb':
     if viewEnabled('switchImdb'):
       view['switchImdb'].value=not sender.value
@@ -161,11 +169,13 @@ def disableSearchTorrent():
   view['lblTorPBay'].enabled = False
   view['lblTorZooqle'].enabled = False
   view['switchZooqle'].enabled = False
+  view['switchTorRarBg'].enabled = False
   
   
 def disableTorrent():
   view['switchTor'].enabled = False
   view['lblTor'].enabled = False
+  
   
 def disableLegendas():
   view['switchPt'].enabled = False
@@ -213,6 +223,9 @@ def due_action(sender):
 
 def torZooqle_action(sender):
   disableSwitch(sender)
+  
+def torRarBg_action(sender):
+  disableSwitch(sender)
 
 def search_action(sender):
   #get swichs state
@@ -225,6 +238,7 @@ def search_action(sender):
   torSearchZ2 = view['switchTorZ2'].value
   torSearchPBay = view['switchTorzPBay'].value
   torSearchZooqle = view['switchTorZooqle'].value
+  torSearchRarBg = view['switchTorRarBg'].value
   imdbSearch=view['switchImdb'].value
   dueSearch = view['switchDue'].value
   if legbr and legpt:
@@ -243,6 +257,8 @@ def search_action(sender):
     url = geturl(title,None,Site.TorSearchZ2)
   elif torSearchZooqle:
     url = geturl(title,None,Site.TorSearchZooqle)
+  elif torSearchRarBg:
+    url = geturl(title,None,Site.TorSearchRarBg)
   elif imdbSearch:
     url = geturl(title,None,Site.ImdbSearch)
   elif dueSearch:
@@ -339,7 +355,7 @@ def main():
       title = input_text[:input_text.rfind(' - ')]  
       
     print('title from {} is {}'.format(input_text,title))
-    
+    import re
     # verifica se tem ano ie: (2018)
     anore = re.compile(r'(\(\d\d\d\d\))')
     ano = anore.search(input_text)
