@@ -292,14 +292,22 @@ def main():
     url_imdb = appex.get_url()
     input_text = appex.get_text()
     print('url:',url_imdb)
-    print('text:',appex.get_text())
+    print('text:',appex.get_text()) 
   else:
     #url_imdb=' http://ishowsapp.com/share/episode/5665645'
-    #input_text = 'I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
-    #input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8273'
+    url_imdb =None
+    
+    #input_text = 'Check out Marvel\'s Iron Fist via @TelevisionApp https://trakt.tv/shows/marvel-s-iron-fist'
+    
+    input_text='I liked Snow Gives Way of Marvel\'s Iron Fist! #MarvelsIronFist via @TelevisionApp https://trakt.tv/shows/marvel-s-iron-fist/seasons/1/episodes/1'
     #url_imdb= None
     #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
-    input_text = None
+    
+    #text: 'I liked Battle at the Binary Stars of Star Trek: Discovery! #StarTrekDiscovery via @TelevisionApp https://trakt.tv/shows/star-trek-discovery/seasons/1/episodes/2'
+    
+    #text: Check out Star Trek: Discovery via @TelevisionApp https://trakt.tv/shows/star-trek-discovery
+    
+    #input_text = None
     
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
     print('yts ag detected')
@@ -314,10 +322,30 @@ def main():
     if appex.is_running_extension():
       input_text=appex.get_text()
     else:
-      input_text='I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
+      
+      pass
+      #input_text='I liked Black Sunday of The Long Road Home! #TheLongRoadHome via @TelevisionApp https://trakt.tv/shows/the-long-road-home/seasons/1/episodes/1'
       #input_text='Check out The Long Road Home via @TelevisionApp https://trakt.tv/shows/the-long-road-home'
       
       #input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8282'
+    import re
+    if input_text.startswith("Check out"):
+      urlsearch= re.search("Check out (.*) via @TelevisionApp.*", input_text)
+      if urlsearch is None:
+        print('regular expression to find tv serie name falied to find \'Check out (.*) via @TelevisionApp.*\' in input_text')
+      title = urlsearch.group(1)
+      print('title from {} is {}'.format(input_text,title))
+    if input_text.startswith("I liked"):
+      urlsearch= re.search(".*https://trakt.tv/shows/(.*)/seasons/(\d{1,})/episodes/(\d{1,})", input_text)
+      if urlsearch is None:
+        print('regular expression to find tv serie name falied to find \'I liked (.*) via @TelevisionApp.*\' in input_text')
+      title = urlsearch.group(1)
+      title = input_text[input_text.rfind("of",0,input_text.find("! #"))+3:input_text.find("! #")]
+      season = urlsearch.group(2).rjust(2, '0')
+      episode = urlsearch.group(3).rjust(2, '0')
+      title =  title.replace("-"," ")
+      title = title + ' S' + season+'e'+ episode
+      print('title from {} is {}'.format(input_text,title))
   elif url_imdb is None and input_text is not None and input_text.find('nos canais TVCine')>0:
     print('tv cine & series detected')
     if appex.is_running_extension():
@@ -344,7 +372,7 @@ def main():
       input_text=appex.get_text()
       print(input_text)
     else:
-      input_text = u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
+        input_text = u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
     ep=None
     print('input_text:{}'.format(input_text))
     if input_text.rfind(']')+1== len(input_text):
