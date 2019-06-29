@@ -63,13 +63,20 @@ class Lingua(Enum):
   PT = 1
   BR = 2
   ALL = 3
+  
+def log(str):
+  print(str)
+  if len(view['txt'].text):
+    view['txt'].text += '\n'+str
+  else:
+    view['txt'].text += str
 
 def geturl(title,lingua,site):
   global im
-  print('title:',title)
+  log('title:'.format(title))
   if lingua is not None:
-    print(lingua.name)
-  print(site.name)
+    log(lingua.name)
+  log(site.name)
   
   legendasdivxUrlLang ="http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search_next&order=&page=1&query={0}{1}"
 
@@ -119,17 +126,17 @@ def geturl(title,lingua,site):
     url=imdb_search.format(title_new)
   elif site == Site.DueRemember:
     title_new = urllib.parse.quote(title)
-    sinopse = urllib.parse.quote(im.sinopse)
-    emissao = urllib.parse.quote(im.emissao)
+    #sinopse = urllib.parse.quote(im.sinopse)
+    #emissao = urllib.parse.quote(im.emissao)
     url_imbd_search = imdb_search.format(urllib.parse.quote_plus(title))
-    url = due_url.format(title_new,im.canal, emissao,sinopse,url_imbd_search,im.duedate) 
+    url = due_url.format(title_new,'im.canal', 'emissao','sinopse',url_imbd_search,'im.duedate') 
     
   return url
 def viewEnabled(v):
   return view[v].enabled == True
   
 def disableSwitch(sender):
-  print('name:{} value: {}'.format(sender.name,sender.value))
+  log('name:{} value: {}'.format(sender.name,sender.value))
   if sender.value == False:
     return
   if sender.name != 'switchPt':
@@ -189,7 +196,7 @@ def disableSearchImdb():
   view['switchImdb'].enabled = False
   
 def disableTorrentSearch(s):
-  print(type(s.sender))
+  log(type(s.sender))
 
 def tor_action(sender):
 #  if view['switchTor'].value:
@@ -264,12 +271,12 @@ def search_action(sender):
   elif dueSearch:
     url = geturl(title,None,Site.DueRemember)
   
-  print('url: ',url)
+  log('url: '.format(url))
   app = UIApplication.sharedApplication()
   app.openURL_(nsurl(url))
   #view.close()
 
-
+#https://www.imdb.com/title/tt4530422/
 def main():
   global title
   global im
@@ -291,11 +298,11 @@ def main():
   if appex.is_running_extension():
     url_imdb = appex.get_url()
     input_text = appex.get_text()
-    print('url:',url_imdb)
-    print('text:',appex.get_text()) 
+    log('url: {}'.format(url_imdb))
+    log('text: {}'.format(appex.get_text()))
   else:
-    #url_imdb=' http://ishowsapp.com/share/episode/5665645'
-    url_imdb =None
+    url_imdb='https://www.imdb.com/title/tt4530422/'
+    #url_imdb =None
     
     #input_text = 'Check out Marvel\'s Iron Fist via @TelevisionApp https://trakt.tv/shows/marvel-s-iron-fist'
     
@@ -308,17 +315,17 @@ def main():
     #text: Check out Star Trek: Discovery via @TelevisionApp https://trakt.tv/shows/star-trek-discovery
     
     #input_text = None
-    
+    log('text: {}'.format(input_text))
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
-    print('yts ag detected')
+    log('yts ag detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
   elif url_imdb and  url_imdb.startswith('https://yts.am/movie/'):
-    print('yts am detected')
+    log('yts am detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
   elif url_imdb is None and input_text is not None and input_text.find('via @TelevisionApp')>0:
-    print('tv time app detected')
+    log('tv time app detected')
     if appex.is_running_extension():
       input_text=appex.get_text()
     else:
@@ -332,49 +339,49 @@ def main():
     if input_text.startswith("Check out"):
       urlsearch= re.search("Check out (.*) via @TelevisionApp.*", input_text)
       if urlsearch is None:
-        print('regular expression to find tv serie name falied to find \'Check out (.*) via @TelevisionApp.*\' in input_text')
+        log('regular expression to find tv serie name falied to find \'Check out (.*) via @TelevisionApp.*\' in input_text')
       title = urlsearch.group(1)
-      print('title from {} is {}'.format(input_text,title))
+      log('title from {} is {}'.format(input_text,title))
     if input_text.startswith("I liked"):
       urlsearch= re.search(".*https://trakt.tv/shows/(.*)/seasons/(\d{1,})/episodes/(\d{1,})", input_text)
       if urlsearch is None:
-        print('regular expression to find tv serie name falied to find \'I liked (.*) via @TelevisionApp.*\' in input_text')
+        log('regular expression to find tv serie name falied to find \'I liked (.*) via @TelevisionApp.*\' in input_text')
       title = urlsearch.group(1)
       title = input_text[input_text.rfind("of",0,input_text.find("! #"))+3:input_text.find("! #")]
       season = urlsearch.group(2).rjust(2, '0')
       episode = urlsearch.group(3).rjust(2, '0')
       title =  title.replace("-"," ")
       title = title + ' S' + season+'e'+ episode
-      print('title from {} is {}'.format(input_text,title))
+      log('title from {} is {}'.format(input_text,title))
   elif url_imdb is None and input_text is not None and input_text.find('nos canais TVCine')>0:
-    print('tv cine & series detected')
+    log('tv cine & series detected')
     if appex.is_running_extension():
       input_text=appex.get_text()
     else:
       input_text='Não podem perder, nos canais TVCine&Séries http://tvcine.pt/filme/8273'
-    print('input_text:{}'.format(input_text))
+    log('input_text:{}'.format(input_text))
     import re
     url= re.search("(?P<url>https?://[^\s]+)", input_text).group("url")
-    print('url:',url)
+    log('url:{}'.format(url))
     im = imdb(url,SourceSite.TVSERIES)
-    print('title from {} is {}'.format(input_text,title))
+    log('title from {} is {}'.format(input_text,title))
   elif input_text is None and url_imdb is not None and url_imdb.find('http://www.tvcine.pt')>=0:
-    print('url tv cine & series detected')
+    log('url tv cine & series detected')
     if not appex.is_running_extension():
       url_imdb='http://tvcine.pt/filme/8273'
     im = imdb(url_imdb,SourceSite.TVSERIES)
-    print('title from {} is {}'.format(url_imdb,im.title))
+    log('title from {} is {}'.format(url_imdb,im.title))
   elif url_imdb and  url_imdb.startswith('http://ishowsapp.com'):
-    print('ishowsapp detected')
+    log('ishowsapp detected')
     title=''
     input_text=''
     if appex.is_running_extension():
       input_text=appex.get_text()
-      print(input_text)
+      log(input_text)
     else:
         input_text = u'The Strain: Noite Absoluta - The Worm Turns [S04E01]'
     ep=None
-    print('input_text:{}'.format(input_text))
+    log('input_text:{}'.format(input_text))
     if input_text.rfind(']')+1== len(input_text):
       title = input_text[:input_text.rfind(' - ')] 
       ep = input_text[input_text.rfind('[')+1:input_text.rfind(']')]
@@ -382,16 +389,16 @@ def main():
     elif input_text.rfind(' - ') >0:
       title = input_text[:input_text.rfind(' - ')]  
       
-    print('title from {} is {}'.format(input_text,title))
+    log('title from {} is {}'.format(input_text,title))
     import re
     # verifica se tem ano ie: (2018)
     anore = re.compile(r'(\(\d\d\d\d\))')
     ano = anore.search(input_text)
     if ano is not None:
-      print (f'tem ano no nome: {ano.group(1)}')
+      log (f'tem ano no nome: {ano.group(1)}')
       title = re.sub(r'(\(\d\d\d\d\))','',title)
       
-      print('title from {} is now {}'.format(input_text,title))
+      log('title from {} is now {}'.format(input_text,title))
     
     
     
@@ -401,25 +408,25 @@ def main():
     
     #get it indb id
     imdburl=u'https://www.imdb.com/title/{0}/'
-    print('legendas divx detected with imdb in url - not supportee yet')
+    log('legendas divx detected with imdb in url - not supportee yet')
     #ttid = url_imdb.rfind
   elif  url_imdb and url_imdb.startswith('https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid='):
     im = imdb(url_imdb,SourceSite.LEGENDAS_IMDBID)
     url_imdb = im.title
     im = imdb(url_imdb,SourceSite.IMDB)
     disableLegendas()
-    print('legendas divx detected')
+    log('legendas divx detected')
   elif url_imdb and url_imdb.startswith(u'https://www.imdb.com/title/tt'):
-    print('imdb detected')
+    log('imdb detected')
     im = imdb(url_imdb,SourceSite.IMDB)
     
   if im is not None:
-    print('tittle is:' + im.title)
+    log('tittle is:{}'.format(im.title) )
     if len(title) ==0:
       title = im.title
   
   if title=='':
-    print('warning. title empty and will become input_text')
+    log('warning. title empty and will become input_text')
     title = input_text
   #print (sheet_text)
   
@@ -428,5 +435,7 @@ def main():
 #app = UIApplication.sharedApplication()
 #URL = 'https://www.google.co.uk/  searchbyimage?&image_url='
 #app.openURL_(nsurl(URL))
+
 view = ui.load_view()
+view['scout'].shows_horizontal_scroll_indicator=False
 main()
