@@ -2,7 +2,7 @@
 
 import ui
 import appex
-import urllib
+import urllib 
 from imdb import imdb
 from imdb import SourceSite
 from objc_util import nsurl,UIApplication
@@ -396,7 +396,7 @@ def main():
     ano = anore.search(input_text)
     if ano is not None:
       log (f'tem ano no nome: {ano.group(1)}')
-      title = re.sub(r'(\(\d\d\d\d\))','',title)
+      title = re.sub(r'(\(\d\d\d\d\))','',input_text)
       
       log('title from {} is now {}'.format(input_text,title))
     
