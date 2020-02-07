@@ -58,6 +58,7 @@ class Site(Enum):
   ImdbSearch = 7
   DueRemember = 8 #tvseries to due
   TorSearchRarBg = 9
+  AfterCredits =10
 
 class Lingua(Enum):
   PT = 1
@@ -96,6 +97,8 @@ def geturl(title,lingua,site):
   
   torrSearchRarBgUrl = 'https://rarbgmirror.org/torrents.php?search={}'
   
+  aftercredits_url ='http://aftercredits.com/?s={}'
+  
   #com x-callback-success mas nao faz sentido  porque chama o pythonista
   #due_url = 'due://x-callback-url/add?title={}%20({}%20-%20{})%0A%0A{}%0A{}&secslater={}&x-success=pythonista://&x-source=pythonista&x-cancel=pythonista://'
   
@@ -130,7 +133,8 @@ def geturl(title,lingua,site):
     #emissao = urllib.parse.quote(im.emissao)
     url_imbd_search = imdb_search.format(urllib.parse.quote_plus(title))
     url = due_url.format(title_new,'im.canal', 'emissao','sinopse',url_imbd_search,'im.duedate') 
-    
+  elif site == Site.AfterCredits:
+    url=aftercredits_url.format(title_new)
   return url
 def viewEnabled(v):
   return view[v].enabled == True
@@ -167,6 +171,9 @@ def disableSwitch(sender):
   if sender.name != 'switchDue':
     if viewEnabled('switchDue'):
       view['switchDue'].value=not sender.value
+  if sender.name != 'switchAfterCredits':
+    if viewEnabled('switchAfterCredits'):
+      view['switchAfterCredits'].value=not sender.value
   #view['switchTor'].value=False
 
 def disableSearchTorrent():
@@ -183,7 +190,6 @@ def disableTorrent():
   view['switchTor'].enabled = False
   view['lblTor'].enabled = False
   
-  
 def disableLegendas():
   view['switchPt'].enabled = False
   view['lblLegPt'].enabled = False
@@ -194,7 +200,10 @@ def disableLegendas():
   
 def disableSearchImdb():
   view['switchImdb'].enabled = False
-  
+
+def disableAfterCredita():
+  view['switchAfterCredits'].enabled = False
+
 def disableTorrentSearch(s):
   log(type(s.sender))
 
@@ -230,10 +239,13 @@ def due_action(sender):
 
 def torZooqle_action(sender):
   disableSwitch(sender)
-  
+
 def torRarBg_action(sender):
   disableSwitch(sender)
 
+def aftercredit_action(sender):
+  disableSwitch(sender)
+  
 def search_action(sender):
   #get swichs state
   global legbr, legpt, tor, title
@@ -248,6 +260,7 @@ def search_action(sender):
   torSearchRarBg = view['switchTorRarBg'].value
   imdbSearch=view['switchImdb'].value
   dueSearch = view['switchDue'].value
+  aftercredits = view['switchAfterCredits'].value
   if legbr and legpt:
     url = geturl(title,Lingua.ALL,Site.Legendas)
   elif legbr or legpt:
@@ -270,6 +283,8 @@ def search_action(sender):
     url = geturl(title,None,Site.ImdbSearch)
   elif dueSearch:
     url = geturl(title,None,Site.DueRemember)
+  elif aftercredits:
+    url = geturl(title,None,Site.AfterCredits)
   
   log('url: '.format(url))
   app = UIApplication.sharedApplication()
