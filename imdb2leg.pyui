@@ -107,7 +107,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{75, 329}, {156, 44}}",
+        "frame" : "{{225, 176}, {156, 44}}",
         "class" : "Button",
         "attributes" : {
           "action" : "search_action",
@@ -229,7 +229,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{43, 253}, {150, 30}}",
+        "frame" : "{{43, 298}, {150, 30}}",
         "class" : "Label",
         "attributes" : {
           "font_name" : "<System>",
@@ -247,7 +247,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{201, 254}, {51, 31}}",
+        "frame" : "{{201, 299}, {51, 31}}",
         "class" : "Switch",
         "attributes" : {
           "uuid" : "564F4355-814C-44FB-8490-377671F87311",
@@ -263,7 +263,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{43, 289}, {150, 32}}",
+        "frame" : "{{43, 337}, {150, 32}}",
         "class" : "Label",
         "attributes" : {
           "font_size" : 20,
@@ -281,7 +281,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{201, 290}, {51, 31}}",
+        "frame" : "{{201, 338}, {51, 31}}",
         "class" : "Switch",
         "attributes" : {
           "action" : "due_action",
@@ -291,17 +291,122 @@
           "name" : "switchDue",
           "uuid" : "F47EFF19-887D-4E1D-8D66-CCC487F703AB"
         },
-        "selected" : true
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{43, 253}, {150, 30}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 20,
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Torrent RarBg",
+          "name" : "lblRarBg",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{201, 253}, {51, 31}}",
+        "class" : "Switch",
+        "attributes" : {
+          "action" : "torRarBg_action",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchTorRarBg",
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{41, 377}, {320, 270}}",
+        "class" : "ScrollView",
+        "attributes" : {
+          "uuid" : "986F9E75-E70F-4BDE-9BC1-3A40C34F280C",
+          "frame" : "{{24, 171}, {320, 320}}",
+          "content_height" : 320,
+          "class" : "ScrollView",
+          "name" : "scout",
+          "content_width" : 320
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{43, 417}, {324, 239}}",
+        "class" : "TextView",
+        "attributes" : {
+          "flex" : "WHLRTB",
+          "name" : "txt",
+          "editable" : true,
+          "frame" : "{{84, 231}, {200, 200}}",
+          "spellchecking_type" : "default",
+          "class" : "TextView",
+          "uuid" : "77C2F144-7BB1-42A0-999F-C63686E0B0B7",
+          "alignment" : "left",
+          "autocorrection_type" : "default",
+          "font_size" : 17,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{43.000000000000057, 377}, {150, 30}}",
+        "class" : "Label",
+        "attributes" : {
+          "name" : "lblAfterCredit",
+          "frame" : "{{78, 82}, {150, 32}}",
+          "uuid" : "D253E165-ADFB-46F0-A45F-DE3BD6493A8D",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "After Credits",
+          "font_size" : 20,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{201.00000000000006, 378}, {50.999999999999943, 31}}",
+        "class" : "Switch",
+        "attributes" : {
+          "action" : "aftercredit_action",
+          "frame" : "{{128, 82}, {51, 31}}",
+          "value" : false,
+          "class" : "Switch",
+          "name" : "switchAfterCredits",
+          "uuid" : "564F4355-814C-44FB-8490-377671F87311"
+        },
+        "selected" : false
       }
     ],
-    "frame" : "{{0, 0}, {315, 401}}",
+    "frame" : "{{0, 0}, {367, 662}}",
     "class" : "View",
     "attributes" : {
-      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "enabled" : true,
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
       "name" : "",
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "flex" : ""
     },
     "selected" : false
