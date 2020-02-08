@@ -59,6 +59,7 @@ class Site(Enum):
   DueRemember = 8 #tvseries to due
   TorSearchRarBg = 9
   AfterCredits =10
+  UmDiaFuiAoCinema = 11
 
 class Lingua(Enum):
   PT = 1
@@ -302,26 +303,37 @@ def main():
   url_imdb = 'https://yts.ag/movie/the-boss-baby-2017'
   url_imdb = 'https://yts.ag/browse-movies/Enigma/all/all/0/latest'
   '''
+  url_imdb='http://umdiafuiaocinema.com/2020/01/locke-key-trailer.html'
   
   #url_imdb = u'http://ishowsapp.com/share/episode/5966172'
   
   #url_imdb = u'https://www.legendasdivx.pt/modules.php?name=Downloads&file=jz&imdbid=4481414&form_cat=28'
   
   #url_imdb = 'https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=258522'
-  url_imdb = 'http://www.tvcine.pt/filme/8274'
+  
+  #inp = appex.get_input()      
+  #print('input title is {} :'.format(inp[0]['title']))
+  
+  #url_imdb = 'http://www.tvcine.pt/filme/8274'
   
   if appex.is_running_extension():
+    inp = appex.get_input() 
     url_imdb = appex.get_url()
     input_text = appex.get_text()
-    log('url: {}'.format(url_imdb))
-    log('text: {}'.format(appex.get_text()))
+    input_title = inp[0]['title']
+    log('input url: {}'.format(url_imdb))
+    log('input text: {}'.format(appex.get_text()))
+    log('input title is {} :'.format(input_title))
   else:
-    url_imdb='https://www.imdb.com/title/tt4530422/'
+    url_imdb='http://umdiafuiaocinema.com/2020/01/locke-key-trailer.html'
     #url_imdb =None
     
     #input_text = 'Check out Marvel\'s Iron Fist via @TelevisionApp https://trakt.tv/shows/marvel-s-iron-fist'
     
     input_text='I liked Snow Gives Way of Marvel\'s Iron Fist! #MarvelsIronFist via @TelevisionApp https://trakt.tv/shows/marvel-s-iron-fist/seasons/1/episodes/1'
+    
+    input_title='Locke & Key [trailer]'
+    #input_title='See'
     #url_imdb= None
     #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
     
@@ -330,16 +342,20 @@ def main():
     #text: Check out Star Trek: Discovery via @TelevisionApp https://trakt.tv/shows/star-trek-discovery
     
     #input_text = None
-    log('text: {}'.format(input_text))
+    log('input url: {}'.format(url_imdb))
+    log('input text: {}'.format(input_text))
+    log('input title is {} :'.format(input_title))
   if url_imdb and  url_imdb.startswith('https://yts.ag/movie/'):
     log('yts ag detected')
     disableTorrent()
     im = imdb(url_imdb,SourceSite.YTS)
-  elif url_imdb and  url_imdb.startswith('https://yts.am/movie/'):
-    log('yts am detected')
-    disableTorrent()
-    im = imdb(url_imdb,SourceSite.YTS)
-  elif url_imdb is None and input_text is not None and input_text.find('via @TelevisionApp')>0:
+  elif url_imdb and  url_imdb.find('umdiafuiaocinema.com')>0:
+    log('um dia fui ao cinema detected')
+    if input_title is not None:
+      if input_title.strip().endswith('[trailer]'):
+        title=input_title.replace('[trailer]','')
+      title = input_title.replace(' :','')
+  elif url_imdb is None and  input_text is not None and input_text.find('via @TelevisionApp')>0:
     log('tv time app detected')
     if appex.is_running_extension():
       input_text=appex.get_text()
