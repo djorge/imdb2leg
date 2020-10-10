@@ -9,6 +9,7 @@ class SourceSite(Enum):
   YTS = 2
   LEGENDAS_IMDBID =3
   TVSERIES = 4
+  UMDIAFUIAOCINEMA = 5
   
   
 class imdb:
@@ -53,6 +54,11 @@ class imdb:
     #REGEX to get imdb url title
     if self.source == SourceSite.IMDB:
       regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(\d\d\d\d\)"
+      regexTitle = re.compile(regexToGetTitle)
+      #print(self.res.text)
+      refound = regexTitle.search(self.res.text)
+      if refound is None:
+        regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(TV Series"
     elif self.source == SourceSite.YTS:
       regexToGetTitle = "<h1 itemprop=\"name\">(.*?)</h1>"
     elif self.source == SourceSite.LEGENDAS_IMDBID:
@@ -61,8 +67,11 @@ class imdb:
       print('BeautifulSoup')
       bsObj = BeautifulSoup(self.res.text ,'html5lib')
       table_el =bsObj.find('table',{'class':'forumborder2'})
+      #print(f'{repr(table_el)}')
       tr_el=table_el.find_all('tr')
-      imdb_url =  tr_el[7].td.b.a['href']
+      #print(f'{len(tr_el)}')
+      #print(f'{repr(tr_el[6])}')
+      imdb_url =  tr_el[len(tr_el)-1].td.b.a['href']
       self.title= imdb_url
       #self.title=imdb_url[imdb_url.rfind('/')+1:] 
       return
@@ -75,9 +84,12 @@ class imdb:
       print(f'title:{self.title}')
       
       canalc=bsObj.find('div',{'class':'detailCanalLogo'})
-      print(f"src attr:{canalc.img.attrs['src']}")
-      self.canal = canalc.img.attrs['src'].split('/')[2].split('_')[0]
-      print(self.canal)
+      #print(f"src attr:{canalc.img.attrs['src']}")
+      if canalc.img:
+        self.canal = canalc.img.attrs['src'].split('/')[2].split('_')[0]
+        print(self.canal)
+      else:
+        self.canal='not found'
       
       emic =bsObj.find('div',{'class':'detailEmissao'})
       print(f'emissao:{emic.text}')
@@ -131,7 +143,9 @@ class imdb:
       print(f'emissao:{self.emissao}')
       
       return
-
+    elif self.source == SourceSite.UMDIAFUIAOCINEMA:
+      print('UMDIAFUIAOCINEMA')
+      return 
     #extract with regex
     regexTitle = re.compile(regexToGetTitle)
     #print(self.res.text)
@@ -148,9 +162,16 @@ def main():
   #url_imdb = 'https://www.imdb.com/title/tt2245988/'
   #url_imdb='https://www.imdb.com/title/tt4912910/'
   #url_imdb='https://www.imdb.com/title/tt2798920/'
-  url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
+  #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=279813'
+  
+  #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=309827'
+  
+  #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=309827'
+  
+  #serie
+  url_imdb='https://www.imdb.com/title/tt11398870/'
   #deveria encontrar https://www.imdb.com/title/tt4881806
-  im = imdb(url_imdb,SourceSite.LEGENDAS_IMDBID)
+  im = imdb(url_imdb,SourceSite.IMDB)
   print('title extracted:',im.title)
 if __name__ == '__main__':
   main()
