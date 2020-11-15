@@ -59,6 +59,10 @@ class imdb:
       refound = regexTitle.search(self.res.text)
       if refound is None:
         regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(TV Series"
+        refound = regexTitle.search(self.res.text)
+        if refound is None:
+          regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(TV Mini-Series"
+        
     elif self.source == SourceSite.YTS:
       regexToGetTitle = "<h1 itemprop=\"name\">(.*?)</h1>"
     elif self.source == SourceSite.LEGENDAS_IMDBID:
@@ -169,7 +173,7 @@ def main():
   #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=309827'
   
   #serie
-  url_imdb='https://www.imdb.com/title/tt11398870/'
+  url_imdb='https://www.imdb.com/title/tt10048342/'
   #deveria encontrar https://www.imdb.com/title/tt4881806
   im = imdb(url_imdb,SourceSite.IMDB)
   print('title extracted:',im.title)
