@@ -53,15 +53,22 @@ class imdb:
     #print('getTitle ')
     #REGEX to get imdb url title
     if self.source == SourceSite.IMDB:
-      regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(\d\d\d\d\)"
+      bsObj = BeautifulSoup(self.res.text ,'html5lib')
+      input_tag = bsObj.find(attrs={"property": "og:title"})
+      output = input_tag['content']
+      regexToGetTitle = "(.*?) \("
       regexTitle = re.compile(regexToGetTitle)
-      #print(self.res.text)
-      refound = regexTitle.search(self.res.text)
-      if refound is None:
-        regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(TV Series"
-        refound = regexTitle.search(self.res.text)
-        if refound is None:
-          regexToGetTitle = "<meta property='og:title' content=\"(.*?) \(TV Mini-Series"
+      refound = regexTitle.search(output)
+      if refound is not None:
+        print(refound.group(1))
+        self.title= refound.group(1) 
+        se = self.getSE(bsObj)
+        if se != '':
+          ts =self.title.split("\"")
+          if len(ts)>=2:
+            self.title = ts[1] + ' '+se      
+            print(repr(self.title))
+      return
         
     elif self.source == SourceSite.YTS:
       regexToGetTitle = "<h1 itemprop=\"name\">(.*?)</h1>"
@@ -160,6 +167,19 @@ class imdb:
   
   def getDueDate(self):
     return self.duedate
+    
+  def getSE(self,bsObj):
+    input_tag = bsObj.find_all(attrs={"class": "bp_heading"})
+    if len(input_tag)>0:
+      output = input_tag[0].text
+      print('output:',output)
+      splitoutput=output.split('|')
+      if len(splitoutput)>=2:
+        splitSeason = splitoutput[0].strip().split(' ')
+        splitEpisode = splitoutput[1].strip().split(' ')
+        if len(splitSeason) ==2 and len(splitEpisode) ==2:
+          return 'S'+ splitSeason[1].zfill(2)+'E'+splitEpisode[1].zfill(2)
+    return 
 
 def main():
   
@@ -170,10 +190,11 @@ def main():
   
   #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=309827'
   
-  #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetails&lid=309827'
+  #url_imdb='https://www.legendasdivx.pt/modules.php?name=Downloads&d_op=viewdownloaddetailsb by &lid=309827'
   
   #serie
-  url_imdb='https://www.imdb.com/title/tt10048342/'
+  #url_imdb='https://www.imdb.com/title/tt10048342/'
+  url_imdb='https://www.imdb.com/title/tt9784798/'
   #deveria encontrar https://www.imdb.com/title/tt4881806
   im = imdb(url_imdb,SourceSite.IMDB)
   print('title extracted:',im.title)
